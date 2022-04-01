@@ -4,7 +4,7 @@ Un petit script python pour récupérer  quelques infos sur les séries : comme 
 Vous pouvez utiliser un IDE comme pycharm community qui gere l'installation des librairies
 ### Prerequis
 - Un IDE pour executer le script ou un terminal
-- python version 3.9 à telecharger https://www.python.org/downloads/
+- python version 3.9 à installer si pas https://www.python.org/downloads/
 - pip à installer si pas https://docs.python.org/fr/3.6/installing/index.html
 - Librairie python à installer si pas avec pip :  sys, time, urlextract, requests, bs4
 
