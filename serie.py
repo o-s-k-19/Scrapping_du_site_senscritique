@@ -23,6 +23,9 @@ while True:
     if nb_input > 46079:
         print("Nombre de series maximum depasses")
         continue
+    elif nb_input <= 0:
+        print("Le nombre saisie n'est pas valable")
+        continue
     else:
         break
 
