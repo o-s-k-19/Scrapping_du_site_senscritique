@@ -34,7 +34,7 @@ while True:
 # Definir les headers pour simuler le comportement d'un client web --> astuce pour eviter d'etre ban temporairement sur le site
 
 headers = {
-    "Referer": "https://www.senscritique.com/search?categories[0][0]=S%C3%A9ries",
+    "Referer": "https://www.senscritique.com/search?size=16",
     "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36",
     # "User-Agent": "custom",
     "X-Requested-With": "XMLHttpRequest",
@@ -53,9 +53,12 @@ nb_liens = 0
 nb_pages = int((nb_input / 16) + 1)
 
 for i in range(0, nb_pages):
-    url = 'https://www.senscritique.com/search?categories[0][0]=S%C3%A9ries&p=' + str(i+1)
+    if i+1 == 1:
+        url = 'https://www.senscritique.com/search?size=16'
+    else:
+        url = f'https://www.senscritique.com/search?from={str((i)*16)}&size=16'
     response = requests.get(url, headers=headers)  # headers)
-    #print(response)
+    print(response)
     if response.ok:
 
         # on va utiliser le module BeautifulSoup pour pouvoir selectionner les elements de la page à extraire
@@ -68,6 +71,7 @@ for i in range(0, nb_pages):
             lien = a['href']
             list_liens_page_serie.append(lien)
             nb_liens += 1
+        print(list_liens_page_serie)
     else:
         print("Ooops :\n-Soit le serveur est trop surcharge\n-Soit l'acces au serveur vous a ete refuse temporairement "
               "\nVerifier sur votre navigateur si l'accés a : " + str(
@@ -80,6 +84,13 @@ for i in range(0, nb_pages):
 Maintenant pour chaque serie on va recuperer les informations concernant : authors; title; content; actors; category; year; image_url; video_url
 et les exporter au format csv :
 """
+print(list_liens_page_serie)
+if list_liens_page_serie.__len__() == 0:
+    print("Ooops :\n-Soit le contenu sur le serveur a changé donc il faut une mise à jour des tag HTML\n-Soit l'acces au serveur vous a ete refuse temporairement "
+              "\nVerifier sur votre navigateur si l'accés a : " + str(
+            url) + " est autorise\nVeuillez réessayer plus tard :)")
+    sys.exit(1)
+
 print("*********************** Exportation en cours ... ***************************************************")
 print("Un ficher series_data.csv sera creer et visible dans le repertoire courant :)")
 
